@@ -52,12 +52,10 @@ function startTimer(){
 function btnTrigger(){
     console.log("test");
     firstQuestion();
-    // startTimer(); 
+    startTimer(); 
 }
 
-
-startButton.addEventListener = ("click", btnTrigger());
-
+startButton.addEventListener("click", btnTrigger);
 
 
 // Add an apendchild function to render question and list of answers, each answer
