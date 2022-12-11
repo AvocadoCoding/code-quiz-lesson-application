@@ -20,7 +20,7 @@ var count = 0;
 
 
 
-function firstQuestion(){
+function renderQuestion(){
 // Remove existing elements in main section of page
 startScreen.setAttribute("style","display:none;");
     
@@ -31,7 +31,19 @@ questionsSection.setAttribute("style","display:block; justify-content: center");
 
 questionTitle.textContent = questions[count].title;  
 
-var buttonOne = document.createElement('button');
+loadButtons();
+
+function loadButtons(){
+for (var i = 0; i < questions[0].choices.length; i++){
+    var answerButton = document.createElement('button');
+    choices.appendChild(answerButton);
+    answerButton.textContent = questions[count].choices[i];
+    answerButton.setAttribute("dataIndex", i); 
+    answerButton.addEventListener("click", userChoice);
+}
+}
+
+/* var buttonOne = document.createElement('button');
 choices.appendChild(buttonOne);
 buttonOne.textContent = questions[count].choices[0];
 buttonOne.setAttribute("dataIndex", 0); 
@@ -53,7 +65,7 @@ var buttonFour = document.createElement('button');
 choices.appendChild(buttonFour);
 buttonFour.textContent = questions[count].choices[3];
 buttonFour.setAttribute("dataIndex", 3); 
-buttonFour.addEventListener("click", userChoice); 
+buttonFour.addEventListener("click", userChoice);  */
 
 function userChoice(event){
     event.preventDefault();
@@ -82,7 +94,7 @@ function startTimer(){
 function btnTrigger(){
     console.log("test");
     console.log(questions[count].title);
-    firstQuestion();
+    renderQuestion();
     startTimer(); 
 }
 
