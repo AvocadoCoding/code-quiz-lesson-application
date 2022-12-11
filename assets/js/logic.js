@@ -9,12 +9,13 @@ var timeCounter = document.querySelector("#time");
 var questionsSection = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
-
+var userFeedback = document.querySelector("#feedback");
 
 // Variable needed to count number of qustions asked?
 var questionNumber = 0;
 
-
+// Text feedback for user afer answering a question
+feedback= "";
 
 function renderQuestion(){
 // Remove existing elements in main section of page
@@ -43,6 +44,8 @@ for (var i = 0; i < questions[questionNumber].choices.length; i++){
 }
 }
 
+userFeedback.textContent = feedback;
+
 function userChoice(event){
     event.preventDefault();
     let index = event.target.getAttribute("dataIndex");
@@ -51,14 +54,14 @@ function userChoice(event){
         console.log("correct");
         // play "right" sound effect
         sfxRight.play();
-
+        feedback = "Correct!";
         questionNumber++;
         renderQuestion();
     }else{
         console.group("wrong");
         // play "wrong" sound effect
         sfxWrong.play();
-
+        feedback = "Wrong!";
         questionNumber++;
         renderQuestion();
     };
