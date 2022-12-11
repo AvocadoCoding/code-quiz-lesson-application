@@ -141,7 +141,10 @@ function btnTrigger(){
 }
 
 // CLearing user feedback text when user clicks in box to enter initials
-
+initials.addEventListener("click", function (event) {
+    event.preventDefault();
+    userFeedback.setAttribute("style","display:none;");
+});
 
 // Submitting initials
 submit.addEventListener("click", function (event) {
