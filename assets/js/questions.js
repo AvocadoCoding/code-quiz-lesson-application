@@ -1,4 +1,4 @@
-/* var questions = [
+var questions = [
     {
       title: "Commonly used data types DO NOT include:",
       choices: ["strings", "booleans", "alerts", "numbers"],
@@ -31,4 +31,4 @@
       choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
       answer: "console.log"
     }
-  ]; */
+  ];
