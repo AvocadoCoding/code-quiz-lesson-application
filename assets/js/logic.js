@@ -16,7 +16,7 @@ var choices = document.querySelector("#choices");
 
 
 // Variable needed to count number of qustions asked?
-var count = 0;
+var questionNumber = 0;
 
 
 
@@ -29,49 +29,25 @@ startScreen.setAttribute("style","display:none;");
 
 questionsSection.setAttribute("style","display:block; justify-content: center");
 
-questionTitle.textContent = questions[count].title;  
+questionTitle.textContent = questions[questionNumber].title;  
 
-loadButtons();
+loadButtons(questionNumber);
 
 function loadButtons(){
-for (var i = 0; i < questions[0].choices.length; i++){
+for (var i = 0; i < questions[questionNumber].choices.length; i++){
     var answerButton = document.createElement('button');
     choices.appendChild(answerButton);
-    answerButton.textContent = questions[count].choices[i];
+    answerButton.textContent = questions[questionNumber].choices[i];
     answerButton.setAttribute("dataIndex", i); 
     answerButton.addEventListener("click", userChoice);
 }
 }
 
-/* var buttonOne = document.createElement('button');
-choices.appendChild(buttonOne);
-buttonOne.textContent = questions[count].choices[0];
-buttonOne.setAttribute("dataIndex", 0); 
-buttonOne.addEventListener("click", userChoice);
-
-var buttonTwo = document.createElement('button');
-choices.appendChild(buttonTwo);
-buttonTwo.textContent = questions[count].choices[1];
-buttonTwo.setAttribute("dataIndex", 1); 
-buttonTwo.addEventListener("click", userChoice); 
-
-var buttonThree = document.createElement('button');
-choices.appendChild(buttonThree);
-buttonThree.textContent = questions[count].choices[2];
-buttonThree.setAttribute("dataIndex", 2); 
-buttonThree.addEventListener("click", userChoice); 
-
-var buttonFour = document.createElement('button');
-choices.appendChild(buttonFour);
-buttonFour.textContent = questions[count].choices[3];
-buttonFour.setAttribute("dataIndex", 3); 
-buttonFour.addEventListener("click", userChoice);  */
-
 function userChoice(event){
     event.preventDefault();
     let index = event.target.getAttribute("dataIndex");
-    var userAnswer = questions[count].choices[index];
-    if(userAnswer === questions[count].answer){
+    var userAnswer = questions[questionNumber].choices[index];
+    if(userAnswer === questions[questionNumber].answer){
         console.log("correct");
     }else{
         console.group("wrong")
@@ -93,7 +69,7 @@ function startTimer(){
 
 function btnTrigger(){
     console.log("test");
-    console.log(questions[count].title);
+    console.log(questions[questionNumber].title);
     renderQuestion();
     startTimer(); 
 }
