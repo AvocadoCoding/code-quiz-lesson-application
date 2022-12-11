@@ -1,12 +1,8 @@
-//Remove all local storage items:
-// localStorage.clear();
+// sound effects
+var sfxRight = new Audio("assets/sfx/correct.wav");
+var sfxWrong = new Audio("assets/sfx/incorrect.wav");
 
-/* window.addEventListener("load",{
-    console.log("page is fully loaded");
-});
- */
-
-// Add an event button to start quiz- goes to first question and starts timer
+// Event button to start quiz- goes to first question and starts timer
 var startButton = document.querySelector("#start");
 var startScreen = document.querySelector("#start-screen");
 var timeCounter = document.querySelector("#time");
@@ -53,10 +49,16 @@ function userChoice(event){
     var userAnswer = questions[questionNumber].choices[index];
     if(userAnswer === questions[questionNumber].answer){
         console.log("correct");
+        // play "right" sound effect
+        sfxRight.play();
+
         questionNumber++;
         renderQuestion();
     }else{
         console.group("wrong");
+        // play "wrong" sound effect
+        sfxWrong.play();
+
         questionNumber++;
         renderQuestion();
     };
@@ -75,6 +77,7 @@ function startTimer(){
     timeCounter.textContent="75";
 }
 
+// Start button function- goes to first question and starts timer
 function btnTrigger(){
     console.log("test");
     console.log(questions[questionNumber].title);
@@ -82,7 +85,7 @@ function btnTrigger(){
     startTimer(); 
 }
 
-
+// Event button to start quiz
 startButton.addEventListener("click", btnTrigger);
 
 
