@@ -23,6 +23,7 @@ var questionNumber = 0;
 function renderQuestion(){
 // Remove existing elements in main section of page
 startScreen.setAttribute("style","display:none;");
+
     
 // Remove first page content, add new elements to page, take question information 
 // from question array
@@ -34,6 +35,9 @@ questionTitle.textContent = questions[questionNumber].title;
 loadButtons(questionNumber);
 
 function loadButtons(){
+//Clear choices button list
+choices.innerHTML = "";
+//For loop to add new button list
 for (var i = 0; i < questions[questionNumber].choices.length; i++){
     var answerButton = document.createElement('button');
     choices.appendChild(answerButton);
@@ -49,8 +53,12 @@ function userChoice(event){
     var userAnswer = questions[questionNumber].choices[index];
     if(userAnswer === questions[questionNumber].answer){
         console.log("correct");
+        questionNumber++;
+        renderQuestion();
     }else{
-        console.group("wrong")
+        console.group("wrong");
+        questionNumber++;
+        renderQuestion();
     };
 
 
