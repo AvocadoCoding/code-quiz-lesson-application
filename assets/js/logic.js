@@ -18,63 +18,105 @@ var questionNumber = 0;
 // Text feedback for user afer answering a question
 feedback= "";
 
+// Timer start time
+var secondsLeft = 75;
+// Declare timerInterval as a global funciton so I can call it in two different functions
+var timerInterval;
+
+// Variables for initial entry
+var initialsInput = document.querySelector("#initials");
+var submitButton = document.querySelector("#submit");
+// var userInitials;
+
 function renderQuestion(){
-// Remove existing elements in main section of page
-startScreen.setAttribute("style","display:none;");
+   
+    // Remove existing elements in main section of page
+    startScreen.setAttribute("style","display:none;");
 
     
-// Add new elements to page, take question information from question array
+    // Add new elements to page, take question information from question array
 
-questionsSection.setAttribute("style","display:block; justify-content: center");
+    questionsSection.setAttribute("style","display:block; justify-content: center");
 
-questionTitle.textContent = questions[questionNumber].title;  
+    questionTitle.textContent = questions[questionNumber].title;  
 
-loadButtons(questionNumber);
+    loadButtons(questionNumber);
 
-function loadButtons(){
-//Clear choices button list
-choices.innerHTML = "";
-//For loop to add new button list
-for (var i = 0; i < questions[questionNumber].choices.length; i++){
-    var answerButton = document.createElement('button');
-    choices.appendChild(answerButton);
-    answerButton.textContent = questions[questionNumber].choices[i];
-    answerButton.setAttribute("dataIndex", i); 
-    answerButton.addEventListener("click", userChoice);
-}
-}
-
-userFeedback.textContent = feedback;
-
-function userChoice(event){
-    event.preventDefault();
-    let index = event.target.getAttribute("dataIndex");
-    var userAnswer = questions[questionNumber].choices[index];
-    if(userAnswer === questions[questionNumber].answer){
-        console.log("correct");
-        // play "right" sound effect
-        sfxRight.play();
-        feedback = "Correct!";
-        questionNumber++;
-        if (questionNumber < questions.length){
-            renderQuestion();
-        }else {
-            renderAllDone();
+    function loadButtons(){
+    //Clear choices button list
+    choices.innerHTML = "";
+    //For loop to add new button list
+    for (var i = 0; i < questions[questionNumber].choices.length; i++){
+        var answerButton = document.createElement('button');
+        choices.appendChild(answerButton);
+        answerButton.textContent = questions[questionNumber].choices[i];
+        answerButton.setAttribute("dataIndex", i); 
+        answerButton.addEventListener("click", userChoice);
         }
-    }else{
-        console.group("wrong");
-        // play "wrong" sound effect
-        sfxWrong.play();
-        feedback = "Wrong!";
-        questionNumber++;
-        if (questionNumber < questions.length){
-            renderQuestion();
-        }else {
-            renderAllDone();
-        }
-    };
+    }
+
+    userFeedback.textContent = feedback;
+
+    function userChoice(event){
+        event.preventDefault();
+        let index = event.target.getAttribute("dataIndex");
+        var userAnswer = questions[questionNumber].choices[index];
+        if(userAnswer === questions[questionNumber].answer){
+            console.log("correct");
+            // play "right" sound effect
+            sfxRight.play();
+            feedback = "Correct!";
+            questionNumber++;
+            if (questionNumber < questions.length){
+                renderQuestion();
+            }else {
+                stopTimer();
+            }
+        }else{
+            console.group("wrong");
+            // play "wrong" sound effect
+            sfxWrong.play();
+            feedback = "Wrong!";
+            secondsLeft= secondsLeft - 15;
+            console.log(secondsLeft);
+            questionNumber++;
+            if (questionNumber < questions.length){
+             renderQuestion();
+            }else {
+            stopTimer();
+            }
+        };
+    }
 }
 
+// Timer countdown starts in incremements of 1000ms
+function startTimer() {
+    // Timer countdown starts in incremements of 1000ms
+    timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeCounter.textContent=secondsLeft;
+    
+    console.log(timerInterval);
+
+        if(secondsLeft === 0) {
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
+            // Calls function to create and append image
+            renderAllDone();
+          }
+
+
+    }, 1000); 
+}
+
+function stopTimer(){
+    // Stops execution of action at set interval
+    clearInterval(timerInterval);
+    //Show finishing time
+    timeCounter.textContent=secondsLeft;
+    // Calls function to create and append image
+    renderAllDone();
+}
 
 function renderAllDone(){
 // Remove default existing elements in main section of page
@@ -88,15 +130,7 @@ endScreen.setAttribute("style","display:block; justify-content: center");
 }
 
 
-//Counts a new question every time funciton run, can repeat for multiple qustions
-// count++;    
-// Continue asking questions until count = questions.length ie. questions array length
-
-}
-    
-function startTimer(){
-    timeCounter.textContent="75";
-}
+   
 
 // Start button function- goes to first question and starts timer
 function btnTrigger(){
@@ -105,6 +139,26 @@ function btnTrigger(){
     renderQuestion();
     startTimer(); 
 }
+
+// CLearing user feedback text when user clicks in box to enter initials
+
+
+// Submitting initials
+submit.addEventListener("click", function (event) {
+    event.preventDefault();
+    userInitials = initialsInput.value.trim();
+    // Return from function early if submitted entry is blank
+    if (userInitials === "") {
+      return;
+    }else{
+        //Store user input in local storage, to collect on highscores page
+        localStorage.setItem("User", userInitials); 
+        initialsInput.value ="";
+    }
+    
+  });
+
+
 
 // Event button to start quiz
 startButton.addEventListener("click", btnTrigger);
