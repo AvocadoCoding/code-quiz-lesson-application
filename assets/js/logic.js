@@ -104,7 +104,7 @@ function startTimer() {
             // Calls function to create and append image
             renderAllDone();
           }
-
+            // set above to smaller than or equal to 0, then becomes 0
 
     }, 1000); 
 }
@@ -114,6 +114,9 @@ function stopTimer(){
     clearInterval(timerInterval);
     //Show finishing time
     timeCounter.textContent=secondsLeft;
+    // Store finishing remaining time value to local storage
+    localStorage.setItem("Score", secondsLeft);
+
     // Calls function to create and append image
     renderAllDone();
 }
@@ -154,12 +157,12 @@ submit.addEventListener("click", function (event) {
     if (userInitials === "") {
       return;
     }else{
-        //Store user input in local storage, to collect on highscores page
+        //Store user input in local storage to collect on highscores page, and
+        // go to highscores page
         localStorage.setItem("User", userInitials); 
         initialsInput.value ="";
         window.location.href="highscores.html";
-    }
-    
+    } 
   });
 
 
