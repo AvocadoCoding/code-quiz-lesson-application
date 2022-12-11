@@ -10,6 +10,7 @@ var questionsSection = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
 var userFeedback = document.querySelector("#feedback");
+var endScreen = document.querySelector("#end-screen");
 
 // Variable needed to count number of qustions asked?
 var questionNumber = 0;
@@ -22,8 +23,7 @@ function renderQuestion(){
 startScreen.setAttribute("style","display:none;");
 
     
-// Remove first page content, add new elements to page, take question information 
-// from question array
+// Add new elements to page, take question information from question array
 
 questionsSection.setAttribute("style","display:block; justify-content: center");
 
@@ -56,17 +56,35 @@ function userChoice(event){
         sfxRight.play();
         feedback = "Correct!";
         questionNumber++;
-        renderQuestion();
+        if (questionNumber < questions.length){
+            renderQuestion();
+        }else {
+            renderAllDone();
+        }
     }else{
         console.group("wrong");
         // play "wrong" sound effect
         sfxWrong.play();
         feedback = "Wrong!";
         questionNumber++;
-        renderQuestion();
+        if (questionNumber < questions.length){
+            renderQuestion();
+        }else {
+            renderAllDone();
+        }
     };
+}
 
 
+function renderAllDone(){
+// Remove default existing elements in main section of page
+startScreen.setAttribute("style","display:none;");
+
+// Hide questions section
+questionsSection.setAttribute("style","display:none;");
+
+// Make end screen visible
+endScreen.setAttribute("style","display:block; justify-content: center");
 }
 
 
