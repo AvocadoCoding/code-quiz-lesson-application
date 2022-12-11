@@ -157,6 +157,7 @@ submit.addEventListener("click", function (event) {
         //Store user input in local storage, to collect on highscores page
         localStorage.setItem("User", userInitials); 
         initialsInput.value ="";
+        window.location.href="highscores.html";
     }
     
   });
