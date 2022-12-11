@@ -11,6 +11,7 @@ var questionTitle = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
 var userFeedback = document.querySelector("#feedback");
 var endScreen = document.querySelector("#end-screen");
+var finalScore = document.querySelector("#final-score");
 
 // Variable needed to count number of qustions asked?
 var questionNumber = 0;
@@ -98,9 +99,14 @@ function startTimer() {
     
     console.log(timerInterval);
 
-        if(secondsLeft === 0) {
+        if(secondsLeft <= 0) {
             // Stops execution of action at set interval
             clearInterval(timerInterval);
+            // Sets seconds left to 0 (in case of negative due to -15)
+            secondsLeft = 0;
+            timeCounter.textContent=secondsLeft;
+            // Store finishing remaining time value to local storage
+            localStorage.setItem("Score", secondsLeft);
             // Calls function to create and append image
             renderAllDone();
           }
@@ -130,6 +136,9 @@ questionsSection.setAttribute("style","display:none;");
 
 // Make end screen visible
 endScreen.setAttribute("style","display:block; justify-content: center");
+
+// Write user score
+finalScore.textContent = secondsLeft;
 }
 
 
