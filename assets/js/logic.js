@@ -100,15 +100,8 @@ function startTimer() {
     console.log(timerInterval);
 
         if(secondsLeft <= 0) {
-            // Sets seconds left to 0 (in case of negative due to -15)
-            secondsLeft = 0;
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
-            timeCounter.textContent=secondsLeft;
-            // Store finishing remaining time value to local storage
-            localStorage.setItem("Score", secondsLeft);
-            // Calls function to create and append image
-            renderAllDone();
+            // If seconds left is smaller than or equal to zero then stop timer
+            stopTimer();
           }
             // set above to smaller than or equal to 0, then becomes 0
 
@@ -118,6 +111,12 @@ function startTimer() {
 function stopTimer(){
     // Stops execution of action at set interval
     clearInterval(timerInterval);
+    // If statement to adjust time if it falls below 0
+    if (secondsLeft >= 0){
+        secondsLeft = secondsLeft;
+    } else{
+        secondsLeft = 0;
+    }
     //Show finishing time
     timeCounter.textContent=secondsLeft;
     // Store finishing remaining time value to local storage
