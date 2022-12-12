@@ -100,10 +100,10 @@ function startTimer() {
     console.log(timerInterval);
 
         if(secondsLeft <= 0) {
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
             // Sets seconds left to 0 (in case of negative due to -15)
             secondsLeft = 0;
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
             timeCounter.textContent=secondsLeft;
             // Store finishing remaining time value to local storage
             localStorage.setItem("Score", secondsLeft);
@@ -141,8 +141,6 @@ endScreen.setAttribute("style","display:block; justify-content: center");
 finalScore.textContent = secondsLeft;
 }
 
-
-   
 
 // Start button function- goes to first question and starts timer
 function btnTrigger(){
