@@ -27,7 +27,6 @@ var timerInterval;
 // Variables for initial entry
 var initialsInput = document.querySelector("#initials");
 var submitButton = document.querySelector("#submit");
-// var userInitials;
 
 function renderQuestion(){
    
@@ -120,7 +119,7 @@ function stopTimer(){
     //Show finishing time
     timeCounter.textContent=secondsLeft;
     // Store finishing remaining time value to local storage
-    localStorage.setItem("Score", secondsLeft);
+    // localStorage.setItem("Score", secondsLeft);
 
     // Calls function to create and append image
     renderAllDone();
@@ -164,9 +163,15 @@ submit.addEventListener("click", function (event) {
       return;
     }else{
         //Store user input in local storage to collect on highscores page, and
-        // go to highscores page
-        localStorage.setItem("User", userInitials); 
+        // function to get values from local storage
+        var existingUserEntries = JSON.parse(localStorage.getItem("User") || "[]");
+        existingUserEntries.push(userInitials);
+        localStorage.setItem("User", JSON.stringify(existingUserEntries));
         initialsInput.value ="";
+        var existingScoreEntries = JSON.parse(localStorage.getItem("Score") || "[]");
+        existingScoreEntries.push(secondsLeft);
+        localStorage.setItem("Score", JSON.stringify(existingScoreEntries));
+        // go to highscores page
         window.location.href="highscores.html";
     } 
   });
